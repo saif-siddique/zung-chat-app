@@ -13,7 +13,7 @@ const httpServer = createServer(app);
 // Initialize Socket.IO with CORS
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: process.env.FRONTEND_ORIGIN || "http://localhost:5173",
         credentials: true
     }
 });
@@ -24,11 +24,11 @@ initializeSocket(io);
 dbConnection()
 .then(() => {
     app.get("/", (req, res) => {
-        res.send(
+        res.send(`
            <h1>
                 Welcome Ahmad Siddique, How are you dear?
            </h1>
-        )
+        `)
     })
     httpServer.listen(port, () => {
         console.log(`App is running at http://localhost:${port}`)
